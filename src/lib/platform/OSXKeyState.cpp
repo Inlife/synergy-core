@@ -515,7 +515,9 @@ OSXKeyState::postHIDVirtualKey(const UInt8 virtualKeyCode,
             modifiers &= ~modifiersDelta;
         }
 
-        hid.postModifierKeys(modifiers);
+        hid.postModifierKeys(virtualKeyCode, modifiers);
+        //hid.postKey(virtualKeyCode, postDown);
+
         break;
 
     default:

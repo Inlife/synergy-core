@@ -23,6 +23,8 @@
 #include <AppKit/NSEvent.h>
 #include <IOKit/hidsystem/IOHIDLib.h>
 
+IOGPoint inl_last_potion;
+
 static io_connect_t getEventDriver(void)
 {
     static mach_port_t sEventDrvrRef = 0;
@@ -53,15 +55,40 @@ static io_connect_t getEventDriver(void)
 }
 
 void
-OSXIOHID::postModifierKeys(UInt32 mask)
+OSXIOHID::postModifierKeys(const UInt8 virtualKeyCode, UInt32 mask)
 {
     NXEventData event;
     bzero(&event, sizeof(NXEventData));
-    IOGPoint loc = { 0, 0 };
+    IOGPoint loc = inl_last_potion;
+    event.key.repeat = true;
+    event.key.keyCode = virtualKeyCode;
+    // event.key.origCharSet = event.key.charSet = NX_ASCIISET;
+    // event.key.origCharCode = event.key.charCode = 0;
+
+    mach_port_t sEventDrvrRef = 0;
+    mach_port_t masterPort, service, iterSystem;
     kern_return_t kr;
-    kr = IOHIDPostEvent(getEventDriver(), NX_FLAGSCHANGED, loc,
-            &event, kNXEventDataVersion, mask, true);
+
+    // Get master device port
+    kr = IOMasterPort(bootstrap_port, &masterPort);
     assert(KERN_SUCCESS == kr);
+
+    kr = IOServiceGetMatchingServices(masterPort, IOServiceMatching(kIOHIDSystemClass), &iterSystem);
+    assert(KERN_SUCCESS == kr);
+
+    while((service = IOIteratorNext(iterSystem))) {
+        assert(service);
+
+        kr = IOServiceOpen(service, mach_task_self(), kIOHIDParamConnectType, &sEventDrvrRef);
+        assert(KERN_SUCCESS == kr);
+
+        kr = IOHIDPostEvent(sEventDrvrRef, NX_FLAGSCHANGED, loc, &event, kNXEventDataVersion, mask, true);
+        assert(KERN_SUCCESS == kr);
+
+        IOObjectRelease(service);
+    }
+
+    IOObjectRelease(iterSystem);
 }
 
 void
@@ -131,6 +158,7 @@ OSXIOHID::postMouseEvent(
         CFRelease(cge);
         location.x = floor(loc.x + ev->mouseMove.dx);
         location.y = floor(loc.y + ev->mouseMove.dy);
+        inl_last_potion = location;
         options = (options & ~kIOHIDSetRelativeCursorPosition) | kIOHIDSetCursorPosition;
     }
 
