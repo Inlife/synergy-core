@@ -53,12 +53,13 @@ static io_connect_t getEventDriver(void)
 }
 
 void
-OSXIOHID::postModifierKeys(UInt32 mask)
+OSXIOHID::postModifierKeys(UInt32 mask, UInt8 virtualKeyCode)
 {
     NXEventData event;
     bzero(&event, sizeof(NXEventData));
     IOGPoint loc = { 0, 0 };
     kern_return_t kr;
+    event.key.keyCode = virtualKeyCode;
     kr = IOHIDPostEvent(getEventDriver(), NX_FLAGSCHANGED, loc,
             &event, kNXEventDataVersion, mask, true);
     assert(KERN_SUCCESS == kr);

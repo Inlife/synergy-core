@@ -22,7 +22,7 @@
 //! IOHID event on Mac
 class OSXIOHID {
 public:
-    void                postModifierKeys(UInt32 mask);
+    void                postModifierKeys(UInt32 mask, UInt8 virtualKeyCode);
     void                postKey(const UInt8 virtualKeyCode,
                                 const bool down);
     void                fakeMouseButton(UInt32 button, bool press);
