@@ -24,6 +24,8 @@
 #include <cctype>
 #include <cstdlib>
 
+void dbg(const char *fmt, ...);
+
 namespace barrier {
 
 KeyMap::NameToKeyMap*            KeyMap::s_nameToKeyMap      = NULL;
@@ -605,6 +607,8 @@ KeyMap::mapCharacterKey(Keystrokes& keys, KeyID id, SInt32 group,
                 KeyModifierMask desiredMask,
                 bool isAutoRepeat) const
 {
+    dbg("KeyMap::mapCharacterKey id=%d, group=%d, currentState=%d, desiredMask=%d\n", id, group, currentState, desiredMask);
+
     // find KeySym in table
     KeyIDMap::const_iterator i = m_keyIDMap.find(id);
     if (i == m_keyIDMap.end()) {
@@ -631,6 +635,7 @@ KeyMap::mapCharacterKey(Keystrokes& keys, KeyID id, SInt32 group,
     if (keyIndex == -1) {
         // no mapping for this keysym
         LOG((CLOG_DEBUG1 "no mapping for key %04x", id));
+        dbg("no mapping for key %d %04x", id, id);
         return NULL;
     }
 
@@ -649,6 +654,22 @@ KeyMap::mapCharacterKey(Keystrokes& keys, KeyID id, SInt32 group,
 
     // add each key
     for (size_t j = 0; j < itemList.size(); ++j) {
+        KeyItem *ptr = (KeyItem *)(&itemList[j]);
+
+        if (group == 0) {
+            switch (id) {
+                case 123: case 91:       ptr->m_button = 0x0022; break;  // {
+                case 125: case 93:       ptr->m_button = 0x001f; break;  // }
+                case 68:  case 100:      ptr->m_button = 0x0003; break;  // D
+                case 58:  case 59:       ptr->m_button = 0x002a; break;  // ;
+                case 34:  case 39:       ptr->m_button = 0x0028; break;  // "
+                case 90:  case 122:      ptr->m_button = 0x0007; break;  // Z
+                case 60:  case 44:       ptr->m_button = 0x002c; break;  // ,
+                case 62:  case 46:       ptr->m_button = 0x0030; break;  // .
+                case 63:  case 47:       ptr->m_button = 0x002d; break;  // /
+            }
+        }
+
         if (!keysForKeyItem(itemList[j], newGroup, newModifiers,
                             newState, desiredMask,
                             0, isAutoRepeat, keys)) {

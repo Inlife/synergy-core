@@ -1,0 +1,48 @@
+й KeyMap::mapCharacterKey id=113, group=0, currentState=0, desiredMask=8192
+ц KeyMap::mapCharacterKey id=119, group=0, currentState=0, desiredMask=8192
+у KeyMap::mapCharacterKey id=101, group=0, currentState=0, desiredMask=8192
+к KeyMap::mapCharacterKey id=114, group=0, currentState=0, desiredMask=8192
+е KeyMap::mapCharacterKey id=116, group=0, currentState=0, desiredMask=8192
+н KeyMap::mapCharacterKey id=121, group=0, currentState=0, desiredMask=8192
+г KeyMap::mapCharacterKey id=117, group=0, currentState=0, desiredMask=8192
+ш KeyMap::mapCharacterKey id=105, group=0, currentState=0, desiredMask=8192
+щ KeyMap::mapCharacterKey id=111, group=0, currentState=0, desiredMask=8192
+з KeyMap::mapCharacterKey id=112, group=0, currentState=0, desiredMask=8192
+ё KeyMap::mapCharacterKey id=91, group=0, currentState=0, desiredMask=8192
+ё KeyMap::mapCharacterKey id=93, group=0, currentState=0, desiredMask=8192
+\ KeyMap::mapCharacterKey id=92, group=0, currentState=0, desiredMask=8192
+ф KeyMap::mapCharacterKey id=97, group=0, currentState=0, desiredMask=8192
+ы KeyMap::mapCharacterKey id=115, group=0, currentState=0, desiredMask=8192
+ф KeyMap::mapCharacterKey id=100, group=0, currentState=0, desiredMask=8192
+а KeyMap::mapCharacterKey id=102, group=0, currentState=0, desiredMask=8192
+п KeyMap::mapCharacterKey id=103, group=0, currentState=0, desiredMask=8192
+о KeyMap::mapCharacterKey id=106, group=0, currentState=0, desiredMask=8192
+л KeyMap::mapCharacterKey id=107, group=0, currentState=0, desiredMask=8192
+д KeyMap::mapCharacterKey id=108, group=0, currentState=0, desiredMask=8192
+4 KeyMap::mapCharacterKey id=59, group=0, currentState=0, desiredMask=8192
+щ KeyMap::mapCharacterKey id=39, group=0, currentState=0, desiredMask=8192
+ы KeyMap::mapCharacterKey id=122, group=0, currentState=0, desiredMask=8192
+ч KeyMap::mapCharacterKey id=120, group=0, currentState=0, desiredMask=8192
+с KeyMap::mapCharacterKey id=99, group=0, currentState=0, desiredMask=8192
+м KeyMap::mapCharacterKey id=118, group=0, currentState=0, desiredMask=8192
+и KeyMap::mapCharacterKey id=98, group=0, currentState=0, desiredMask=8192
+т KeyMap::mapCharacterKey id=110, group=0, currentState=0, desiredMask=8192
+ь KeyMap::mapCharacterKey id=109, group=0, currentState=0, desiredMask=8192
+. KeyMap::mapCharacterKey id=44, group=0, currentState=0, desiredMask=8192
+. KeyMap::mapCharacterKey id=46, group=0, currentState=0, desiredMask=8192
+\ KeyMap::mapCharacterKey id=47, group=0, currentState=0, desiredMask=8192
+
+
+ёё4щаы..?..\
+
+123 91       0x0022  // {
+125 93       0x001f  // }
+68  100      0x0003  // D
+58  59       0x002a  // ;
+34  39       0x0028  // "
+90  122      0x0007  // Z
+60  44       0x002c  // ,
+62  46       0x0030  // .
+63  47       0x002d  // /
+
+яЯвВбБюЮ.,хХъЪжЖэЭЯХЪ

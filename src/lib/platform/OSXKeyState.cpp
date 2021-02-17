@@ -503,6 +503,26 @@ static io_connect_t getEventDriver(void)
     return sEventDrvrRef;
 }
 
+#define ZPL_NANO
+#define ZPL_IMPL
+#include "zpl.h"
+
+void dbg(const char *fmt, ...) {
+    // static zpl_file f = {0};
+    // static bool initialized = false;
+
+    // if (!initialized) {
+    //     initialized = true;
+    //     zpl_file_open_mode(&f, ZPL_FILE_MODE_APPEND, "/Users/inlife/bar.log");
+    // }
+
+    // zpl_isize res;
+    // va_list va;
+    // va_start(va, fmt);
+    // res = zpl_fprintf_va(&f, fmt, va);
+    // va_end(va);
+}
+
 void
 OSXKeyState::postHIDVirtualKey(const UInt8 virtualKeyCode,
                 const bool postDown)
@@ -587,6 +607,8 @@ OSXKeyState::fakeKey(const Keystroke& keystroke)
         LOG((CLOG_DEBUG1
             "  button=0x%04x virtualKey=0x%04x keyDown=%s",
             button, virtualKey, keyDown ? "down" : "up"));
+
+        dbg("  button=0x%04x virtualKey=0x%04x keyDown=%s\n", button, virtualKey, keyDown ? "down" : "up");
 
         postHIDVirtualKey(virtualKey, keyDown);
 
@@ -745,10 +767,10 @@ OSXKeyState::getKeyMap(barrier::KeyMap& keyMap,
             }
 
             // now add a key entry for each key/required modifier pair.
-            item.m_sensitive = mapModifiersFromOSX(sensitive << 16);
+            item.m_sensitive = mapModifiersFromOSX(sensitive << 8);
             for (std::set<UInt32>::iterator k = required.begin();
                                             k != required.end(); ++k) {
-                item.m_required = mapModifiersFromOSX(*k << 16);
+                item.m_required = mapModifiersFromOSX(*k << 8);
                 keyMap.addKeyEntry(item);
             }
         }
